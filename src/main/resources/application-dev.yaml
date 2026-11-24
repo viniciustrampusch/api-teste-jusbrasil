@@ -1,0 +1,17 @@
+app:
+  environment: dev
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/teste_ia
+    username: teste_ia
+    password: ${POSTGRES_PASSWORD}
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    interview.jusbrasil: DEBUG

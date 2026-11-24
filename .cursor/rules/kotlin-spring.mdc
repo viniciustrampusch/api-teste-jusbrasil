@@ -1,0 +1,34 @@
+---
+description: Kotlin and Spring Boot conventions for this repository. Use when editing Kotlin, Gradle, or Spring configuration.
+globs: "**/*.kt,**/*.kts"
+alwaysApply: false
+---
+
+# Kotlin and Spring Boot
+
+Write idiomatic Kotlin. Prefer constructor injection, immutable data, and explicit business behavior. Use null safety instead of sentinel values. Keep functions short enough to read in one pass. Do not add extension functions or abstractions that have a single, obvious call site.
+
+## Stack in this repository
+
+Versions live in `build.gradle.kts` and `docs/adr/0001-baseline-decisions.md`. Do not bump one piece in isolation.
+
+- Java 25 toolchain, provisioned by the Foojay resolver. Gradle itself may run on an older local JDK.
+- Kotlin and Spring Boot versions that are tested together. The Kotlin Gradle plugin version is the source of truth. The Spring Boot plugin aligns `kotlin.version` to it.
+- Gradle Kotlin DSL and the Gradle wrapper. Kotlin DSL is the build language because the application is Kotlin and the plugins used here support it. Do not treat that choice as a rule for every future project. Record a different choice when Groovy would be simpler to maintain.
+- `kotlin-spring` opens Spring-annotated classes so the framework can proxy them. Do not open classes manually.
+- `kotlin-reflect` and `tools.jackson.module:jackson-module-kotlin` stay on the classpath so Jackson can bind Kotlin types. Spring Boot 4 uses Jackson 3. Do not add `-Xannotation-default-target=param-property`. Kotlin 2.4 already uses that default.
+- JUnit Jupiter, MockK, Spring Boot Test, WireMock, Spotless with ktlint, Detekt, and JaCoCo, as configured in the build. Do not add Testcontainers.
+
+## Spring
+
+- Prefer constructor injection. Avoid field injection.
+- Bind configuration with typed properties or a small factory. Do not read the environment ad hoc from business code.
+- Keep `dev` and `prod` profiles limited to real differences. Do not copy the whole configuration into every profile.
+- Read secrets from the environment. Never commit them.
+- Do not add a database, broker, or HTTP client until a requirement needs it.
+
+## Build commands
+
+- Fast local gate: `./gradlew fastCheck`
+- Delivery gate: `./gradlew check`
+- Format: `./gradlew spotlessApply`

@@ -1,0 +1,15 @@
+services:
+  postgres:
+    build:
+      context: ./docker/postgres
+    image: teste-ia-postgres
+    container_name: teste-ia-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the environment or in an untracked .env file}
+    volumes:
+      - teste-ia-postgres:/var/lib/postgresql/data
+
+volumes:
+  teste-ia-postgres:

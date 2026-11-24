@@ -1,0 +1,33 @@
+---
+description: Architecture guidance for domain modeling and application boundaries. Use when designing or changing structure, use cases, or dependencies.
+alwaysApply: false
+---
+
+# Architecture
+
+Start with the simplest structure that protects the business rules and meets the known requirements. If two designs meet the same requirements, choose the simpler one when it stays testable, safe, and maintainable.
+
+## DDD and Clean Architecture
+
+Use domain language in names and in the model. Apply entities, value objects, aggregates, domain services, and domain events only when they match a real consistency or behavior need.
+
+- An entity has a stable identity. A value object is defined by its values and is immutable.
+- An aggregate is a consistency boundary, not a package name. Keep the boundary small.
+- A domain service holds behavior that does not naturally belong to one type. Do not create a service as a place for procedures.
+- An application use case coordinates one behavior. It does not contain framework or persistence details.
+- Publish a domain event only when another part of the current system must react.
+- Dependencies point inward. Domain code does not import frameworks, database clients, or HTTP clients.
+- Infrastructure implements ports that the application actually needs. Do not add a repository, adapter, or interface for a single implementation unless it isolates a real boundary or makes a required test possible.
+
+## SOLID, used with judgment
+
+- Split a type when it has two reasons to change that already cause harm.
+- Prefer constructor injection and immutable data.
+- Depend on an abstraction when more than one implementation exists or a boundary must be isolated. Do not extract an interface for a single implementation by habit.
+- Keep callers closed to modification by adding behavior where the change actually belongs, not by building an extension framework in advance.
+
+## Do not add without a concrete reason
+
+Layers, interfaces, repositories, factories, builders, aggregates, generic base types, or design patterns added to demonstrate architecture. Premature generalization and extension points for requirements nobody has asked for.
+
+The current baseline is one Gradle module and one application package. See `docs/adr/0001-baseline-decisions.md`. Add a module or a deeper package split when a boundary has an independent lifecycle or dependency set, not before.

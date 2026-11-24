@@ -1,0 +1,30 @@
+---
+description: Git workflow, Conventional Commits, and validation before a commit. Never commit without an explicit user request.
+alwaysApply: true
+---
+
+# Git workflow
+
+Use a light branch flow. `main` is the integration branch. Create `type/short-description` from it, for example `feat/health-check`. Use Git Flow only when the user explicitly asks for it.
+
+## Commits
+
+Format: `type(scope): description`
+
+Allowed types: `feat`, `fix`, `refactor`, `test`, `docs`, `chore`, `build`, `ci`, `perf`, `security`.
+
+- One cohesive change per commit. Inspect `git diff` before committing.
+- Do not commit, push, merge, or rewrite history unless the user explicitly asks in this conversation.
+- Do not skip hooks or quality checks with `--no-verify` or equivalent.
+- Do not commit secrets, `.env` files, or generated build output.
+
+Before proposing a commit, run the validation that matches the risk:
+
+- During iteration: `./gradlew fastCheck`
+- Before delivery: `./gradlew check`
+
+This repository does not install a Git hook. A hook that always runs the full suite adds friction without a team policy. The agent still runs the commands above and reports their real results.
+
+## Ignore rules
+
+Keep `.gitignore` aligned with this stack only: Gradle build output, Kotlin and Java compiler output, IDE state, local Cursor cache, logs, OS files, and env files that can hold secrets. Do not ignore the Gradle wrapper, shared project config, or `.cursor` rules, skills, agents, and commands.

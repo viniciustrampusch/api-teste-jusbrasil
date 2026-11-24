@@ -1,0 +1,8 @@
+naming:
+  FunctionNaming:
+    ignoreAnnotated:
+      - Test
+
+style:
+  MaxLineLength:
+    maxLineLength: 140

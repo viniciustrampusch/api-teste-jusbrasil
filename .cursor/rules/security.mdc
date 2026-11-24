@@ -1,0 +1,20 @@
+---
+description: Proportional secure-development guidance. Use when handling input, authentication, data protection, dependencies, or errors.
+alwaysApply: false
+---
+
+# Security
+
+Match controls to the data, the exposure, and the stated requirements. Do not add an identity platform, a secret store, or a security framework that the current application does not need. Do not weaken a real security requirement to keep the design small.
+
+- Validate input at the boundary. Reject blank or illegal values before they reach business behavior.
+- Authenticate and authorize any operation that is not intentionally public. The health endpoint is public. Its response hides details outside local development.
+- Treat OWASP Top 10 risks as a review checklist for the code that exists: broken access control, injection, insecure design, security misconfiguration, vulnerable components, authentication failures, integrity failures, logging of sensitive data, and server-side request forgery when outbound calls exist.
+- Use parameterized data access. Do not build queries by concatenating input. There is no database until a requirement adds one.
+- Do not log or commit passwords, tokens, credentials, or sensitive personal data.
+- Keep secrets in the environment or a secret manager. `.env` is gitignored. `.env.example` contains names only.
+- Fail without returning stack traces, internal identifiers, or configuration to callers.
+- Grant the least privilege the component needs.
+- Review dependency vulnerabilities when adding or upgrading a library. Do not upgrade blindly to the newest release when it breaks the tested stack.
+
+When a change introduces a new endpoint, a new secret, or a new outbound call, say which of these controls applies and which are still unnecessary.

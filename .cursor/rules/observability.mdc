@@ -1,0 +1,25 @@
+---
+description: Proportional observability guidance. Use when adding logs, errors, metrics, tracing, or operational signals.
+alwaysApply: false
+---
+
+# Observability
+
+Add the signals the running system needs. Do not start from a full metrics, tracing, and correlation platform.
+
+- A small application needs useful logs and visible errors.
+- An API usually needs request failure visibility and a few application metrics when those metrics answer an operational question.
+- A distributed system, or a requirement that asks for it, can justify correlation IDs, traces, and richer metrics.
+- An outbound integration needs failure, latency, and timeout visibility when that integration exists.
+
+## Levels
+
+- `ERROR`: the operation failed or the process hit a problem that needs attention.
+- `WARN`: something unexpected happened and the operation continued or degraded.
+- `INFO`: a business or lifecycle event an operator needs.
+- `DEBUG`: investigation detail. Enable it for a narrow package, usually in the `dev` profile.
+- `TRACE`: very fine detail, only for a specific investigation.
+
+Do not log routine success at `INFO` from every layer. Do not log the same event in the controller and the service. Never log passwords, tokens, credentials, or sensitive personal data.
+
+The baseline uses Spring Boot's console logging. The `dev` profile sets this package to `DEBUG`. Production stays at `INFO`. Health details are visible in `dev` and hidden otherwise. Do not add a JSON logger, a metrics registry, or a tracer until a requirement names the consumer of that signal.

@@ -1,0 +1,28 @@
+---
+description: Engineering principles for every change. Simplicity, explicit assumptions, and human ownership of decisions.
+alwaysApply: true
+---
+
+# Engineering principles
+
+The engineer owns architectural and business decisions. Use AI to explore, draft, and check work. Do not treat generated code as accepted until a person has reviewed the assumptions, the diff, and the verification.
+
+- State assumptions that affect behavior, scope, or design. Ask when an answer would change the solution.
+- Implement in small, verifiable steps. Inspect the diff before considering work done.
+- Prefer the simplest design that meets the known functional and non-functional requirements and stays readable, testable, secure, and maintainable.
+- Apply DRY by removing real duplication. Do not introduce an abstraction only to hide a small repetition.
+- Apply KISS by choosing the most direct correct solution.
+- Apply YAGNI by building only what current requirements need. Do not add layers, interfaces, factories, frameworks, or extensibility for hypothetical future use.
+- Before adding a layer, abstraction, dependency, interface, tool, or pattern, name the concrete problem it solves.
+- Do not claim that something was verified, implemented, or decided without evidence.
+- Do not invent requirements. Do not make architectural decisions silently. Name the decision and the trade-off.
+- Scale the process to the problem. Use the matching skill in `.cursor/skills/` for feature delivery, technical design, code review, remediation, or a time-boxed interview. Do not apply every skill and architectural pattern to a small change.
+- Keep code, comments, technical docs, and commit messages in English. Keep user-facing UI copy in Brazilian Portuguese when a UI exists.
+- Do not commit, push, merge, or rewrite git history unless the user explicitly asks.
+
+```kotlin
+// Prefer this until a second caller needs the behavior.
+fun fullName(first: String, last: String): String = "$first $last"
+
+// Do not add FullNameFormatter, a strategy interface, and a factory for one call site.
+```

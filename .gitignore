@@ -1,0 +1,44 @@
+# Gradle
+.gradle/
+build/
+
+# Kotlin and Java
+.kotlin/
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+*.war
+hs_err_pid*
+replay_pid*
+*.hprof
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Logs and local runtime output
+*.log
+logs/
+
+# IntelliJ IDEA and other local IDE state
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# Eclipse and VS Code local state
+.classpath
+.project
+.settings/
+.vscode/
+bin/
+
+# Local Cursor state. Shared rules, skills, agents, and commands stay tracked.
+.cursor/cache/
+.cursor/**/*.log
+
+# OS files
+.DS_Store
+Thumbs.db
